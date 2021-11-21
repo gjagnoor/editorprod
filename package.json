@@ -19,7 +19,8 @@
         "build": "react-scripts build",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
-        "dev-server": "nodemon server/index.js"
+        "dev-server": "nodemon server/index.js",
+        "heroku": "node server/index.js"
     },
     "eslintConfig": {
         "extends": "react-app"
