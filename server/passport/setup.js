@@ -1,6 +1,7 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20");
-// const client = require("../pg/connection.js");
+// const { PrismaClient } = require("@prisma/client");
+// const prisma = new PrismaClient();
 
 let googleOptions = {
     callbackURL:
@@ -26,6 +27,23 @@ passport.use(
     new GoogleStrategy(
         googleOptions,
         (accessToken, refreshToken, profile, done) => {
+            // const user = await prisma.user.findUnique({
+            //     where: {
+            //         id: profile.id
+            //     }
+            // });
+            // if (user) {
+            //     return done(null, user);
+            // } else {
+            //     const newuser = await prisma.user.create({
+            //         data: {
+            //             id: profile.id,
+            //             email: profile.email,
+            //             name: profile.displayName
+            //         }
+            //     });
+            //     return done(null, newuser);
+            // }
             // const findQuery = `SELECT * FROM users WHERE displayName = $1`;
             // const findQueryValues = [profile.displayName];
             // client.query(findQuery, findQueryValues, (err, foundUser) => {

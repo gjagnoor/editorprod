@@ -4,6 +4,7 @@
     "private": true,
     "proxy": "http://localhost:7000/",
     "dependencies": {
+        "@prisma/client": "^3.5.0",
         "@reduxjs/toolkit": "^1.5.1",
         "@testing-library/jest-dom": "^4.2.4",
         "@testing-library/react": "^9.3.2",
@@ -12,6 +13,7 @@
         "cookie-session": "^1.4.0",
         "passport": "^0.5.0",
         "passport-google-oauth20": "^2.0.0",
+        "prisma": "^3.5.0",
         "react": "^17.0.2",
         "react-dom": "^17.0.2",
         "react-redux": "^7.2.3",
@@ -27,6 +29,9 @@
     },
     "eslintConfig": {
         "extends": "react-app"
+    },
+    "prisma": {
+        "schema": "./server/prisma/schema.prisma"
     },
     "browserslist": {
         "production": [
