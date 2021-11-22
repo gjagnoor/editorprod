@@ -27,7 +27,7 @@
         "eject": "react-scripts eject",
         "dev-server": "nodemon server/index.js",
         "heroku": "node server/index.js",
-        "heroku:deploy": "prisma migrate deploy && git push heroku main"
+        "heroku:deploy": "git push heroku main"
     },
     "eslintConfig": {
         "extends": "react-app"
