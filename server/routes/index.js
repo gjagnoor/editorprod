@@ -40,7 +40,7 @@ router.get("/logout", function (req, res) {
 
 // redirect
 router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
-    return res.redirect(domain);
+    return res.redirect(`${process.env.REACT_APP_URI}`);
 });
 
 module.exports = router;
