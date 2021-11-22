@@ -11,6 +11,8 @@
 # production
 /build
 .env
+server/passport/googleSetup.json
+server/prisma/migrations
 
 # misc
 .DS_Store
