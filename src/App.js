@@ -24,7 +24,7 @@ function App({ user, logout, fetchUser }) {
                         href={
                             location === "localhost"
                                 ? "http://localhost:7000/api/google"
-                                : `${process.env.REACT_APP_URI}/api/google`
+                                : `https://codebasev1.herokuapp.com/api/google`
                         }
                     >
                         Login
