@@ -8,7 +8,7 @@ const noUser = { id: "", name: "" };
 const domain =
     process.env.NODE_ENV === "development"
         ? "http://localhost:3000/"
-        : "https://codebaseprod.herokuapp.com";
+        : "https://codebasev1.herokuapp.com";
 const authenticationOptions = {
     scope: ["profile"]
 };
@@ -40,7 +40,7 @@ router.get("/logout", function (req, res) {
 
 // redirect
 router.get("/google/redirect", passport.authenticate("google"), (req, res) => {
-    return res.redirect(process.env.domain);
+    return res.redirect(domain);
 });
 
 module.exports = router;
