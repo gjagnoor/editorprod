@@ -3,11 +3,12 @@ const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const passport = require("passport");
 require("dotenv").config();
+console.log("in", process.env.NODE_ENV);
 
 const noUser = { id: "", name: "" };
 const domain =
     process.env.NODE_ENV === "development"
-        ? "http://localhost:3000/"
+        ? "http://localhost:3000"
         : "https://codebasev1.herokuapp.com";
 const authenticationOptions = {
     scope: ["profile"]
