@@ -12,6 +12,7 @@
 /build
 .env
 server/passport/googleSetup.json
+src/.env
 
 # misc
 .DS_Store
