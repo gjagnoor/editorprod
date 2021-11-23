@@ -13,6 +13,7 @@
 .env
 server/passport/googleSetup.json
 src/.env
+codebasev1-firebase-adminsdk.json
 
 # misc
 .DS_Store

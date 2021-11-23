@@ -1,6 +1,7 @@
 /* eslint-disable new-cap */
 const router = require('express').Router();
 const passport = require('passport');
+const db = require('../firestore/index.js');
 require('dotenv').config();
 console.log('in', process.env.NODE_ENV);
 
@@ -41,6 +42,18 @@ router.get('/logout', function(req, res) {
 // redirect
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   return res.redirect(domain);
+});
+
+// db.collection('users').doc().set({
+//   name: 'Grace Hopper',
+// });
+// db.collection('users').doc().set({
+//   name: 'Alan Turing',
+// });
+// testing firestore
+db.collection('users').get().then((snapshot) => {
+  console.log(snapshot.docs.map((doc) => doc.data()));
+  // [ { name: 'GRACE HOPPER' }, { name: 'ALAN TURING' } ]
 });
 
 module.exports = router;
