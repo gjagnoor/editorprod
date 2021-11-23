@@ -44,16 +44,13 @@ router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
   return res.redirect(domain);
 });
 
-// db.collection('users').doc().set({
-//   name: 'Grace Hopper',
-// });
-// db.collection('users').doc().set({
-//   name: 'Alan Turing',
+// db.collection('userConfig').doc('9382293kjdnkjaendk').set({
+//   id: '9382293kjdnkjaendk',
+//   configVar1: true,
 // });
 // testing firestore
-db.collection('users').get().then((snapshot) => {
-  console.log(snapshot.docs.map((doc) => doc.data()));
-  // [ { name: 'GRACE HOPPER' }, { name: 'ALAN TURING' } ]
+db.collection('userConfig').doc('9382293kjdnkjaendk').get().then((snapshot) => {
+  console.log(snapshot.data());
 });
 
 module.exports = router;

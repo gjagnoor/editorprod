@@ -4,7 +4,7 @@ import React from 'react';
 import logo from './logo.png';
 import {connect} from 'react-redux';
 import {fetchUserAsync, logoutAsync} from './features/user/userSlice.js';
-import User from './features/user/User.js';
+import Navigation from './features/navbar/Navigation.js';
 import './App.css';
 
 function App({user, logout, fetchUser}) {
@@ -14,12 +14,9 @@ function App({user, logout, fetchUser}) {
 
   return (
     <div>
-      <div style={{margin: '2em'}}>
-        <User />
-      </div>
+      <Navigation />
       <div className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
-        <code>Codebase</code>
       </div>
     </div>
   );
