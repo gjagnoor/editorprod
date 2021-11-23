@@ -4,6 +4,7 @@
     "private": true,
     "proxy": "http://localhost:7000/",
     "dependencies": {
+        "@blueprintjs/core": "^3.51.3",
         "@prisma/client": "^3.5.0",
         "@reduxjs/toolkit": "^1.5.1",
         "@testing-library/jest-dom": "^4.2.4",
@@ -12,6 +13,10 @@
         "axios": "^0.24.0",
         "cookie-session": "^1.4.0",
         "dotenv": "^10.0.0",
+        "eslint": "^7.11.0",
+        "eslint-config-google": "^0.14.0",
+        "eslint-plugin-react": "^7.27.1",
+        "firebase-admin": "^10.0.0",
         "passport": "^0.5.0",
         "passport-google-oauth20": "^2.0.0",
         "prisma": "^3.5.0",
@@ -23,7 +28,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "react-scripts test",
+        "test": "cypress open",
         "eject": "react-scripts eject",
         "dev-server": "nodemon server/index.js",
         "heroku": "node server/index.js",
@@ -46,5 +51,8 @@
             "last 1 firefox version",
             "last 1 safari version"
         ]
+    },
+    "devDependencies": {
+        "cypress": "^9.1.0"
     }
 }
