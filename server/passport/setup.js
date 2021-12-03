@@ -4,13 +4,6 @@ const GithubStrategy = require('passport-github2');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
-const googleOptions = {
-  callbackURL: '/api/github/redirect',
-  clientID: process.env.clientID || require('./github.json').clientID,
-  clientSecret: process.env.client_secret ||
-        require('./github.json').clientSecret,
-};
-
 passport.serializeUser((user, done) => {
   done(null, user);
 });
