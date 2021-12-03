@@ -17,7 +17,14 @@ function Navigation({user, logout, fetchUser}) {
       <Navbar.Group align={Alignment.LEFT}>
         <Navbar.Heading> [ ] Codebase</Navbar.Heading>
         <Navbar.Divider />
-        <AnchorButton className="bp3-button bp3-minimal" role="button" icon="home" href="/">Home</AnchorButton>
+        <AnchorButton
+          className="bp3-button bp3-minimal"
+          role="button"
+          icon="home"
+          href="/"
+        >
+                    Home
+        </AnchorButton>
       </Navbar.Group>
       <Navbar.Group align={Alignment.RIGHT}>
         <Navbar.Divider />
