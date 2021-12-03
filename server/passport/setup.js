@@ -5,10 +5,7 @@ const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const googleOptions = {
-  callbackURL:
-        process.env.NODE_ENV === 'development' ?
-            '/api/google/redirect' :
-            `https://codebasev1.herokuapp.com/api/google/redirect`,
+  callbackURL: `http://127.0.0.1/api/google/redirect`,
   clientID:
         process.env.client_id || require('./googleSetup.json').web.client_id,
   clientSecret:
