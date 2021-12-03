@@ -5,7 +5,7 @@ const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const googleOptions = {
-  callbackURL: `http://127.0.0.1/api/google/redirect`,
+  callbackURL: '/api/google/redirect',
   clientID:
         process.env.client_id || require('./googleSetup.json').web.client_id,
   clientSecret:
