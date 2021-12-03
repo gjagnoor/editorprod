@@ -5,11 +5,7 @@ orbs:
 workflows:
     heroku_deploy:
         jobs:
-            - cypress/install:
-                  build: "yarn run build"
-            - cypress/run:
-                  requires:
-                      - cypress/install
+            - cypress/run
             - heroku/deploy-via-git:
                   requires:
                       - cypress/run
