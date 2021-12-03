@@ -1,2 +1,2 @@
-web: yarn heroku
+web: npm run heroku
 release: npx prisma migrate deploy
