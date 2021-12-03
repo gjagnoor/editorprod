@@ -35,7 +35,7 @@
     "scripts": {
         "start": "react-scripts start",
         "build": "react-scripts build",
-        "test": "cypress open",
+        "test": "cypress run",
         "eject": "react-scripts eject",
         "dev-server": "nodemon server/index.js",
         "heroku": "node server/index.js",
