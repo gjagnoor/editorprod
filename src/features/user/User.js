@@ -10,16 +10,16 @@ function User({user, logout, fetchUser}) {
   React.useEffect(() => {
     fetchUser();
   }, [fetchUser]);
-
+  console.log(user);
   return (
     <div>
-      {user.info.id ? (
+      {user.info ? (
             <Button className="bp3-minimal" icon="log-out" text="Logout" onClick={logout} />
             ) : (
               <AnchorButton className="bp3-minimal" icon="log-in" text="Login" href={
                     process.env.NODE_ENV === 'development' ?
-                        'http://localhost:7000/api/google' :
-                        `https://codebasev1.herokuapp.com/api/google`
+                        `http://localhost:7000/api/github` :
+                        `https://codebasev1.herokuapp.com/api/github`
               } />
         )}
     </div>

@@ -5,13 +5,12 @@ const db = require('../firestore/index.js');
 require('dotenv').config();
 console.log('in', process.env.NODE_ENV);
 
-const noUser = {id: '', name: ''};
 const domain =
     process.env.NODE_ENV === 'development' ?
         'http://localhost:3000' :
         'https://codebasev1.herokuapp.com';
 const authenticationOptions = {
-  scope: ['profile'],
+  scope: ['user:email'],
 };
 
 const authCheck = (req, res, next) => {
@@ -27,20 +26,20 @@ router.get('/me', async (req, res) => {
 });
 
 router.get('/user', authCheck, async (req, res) => {
-  return res.json(req.user || noUser);
+  return res.json(req.user);
 });
 
 // auth login with google
-router.get('/google', passport.authenticate('google', authenticationOptions));
+router.get('/github', passport.authenticate('github', authenticationOptions));
 
 // auth logout
 router.get('/logout', function(req, res) {
   req.logOut();
-  return res.json(noUser);
+  return res.json(null);
 });
 
 // redirect
-router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
   return res.redirect(domain);
 });
 

@@ -2,10 +2,7 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {logoutUser, fetchUser} from './userAPI';
 
 const initialState = {
-  info: {
-    id: '',
-    name: '',
-  },
+  info: null,
 };
 
 export const fetchUserAsync = createAsyncThunk('user/fetch', async () => {

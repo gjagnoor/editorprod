@@ -12,6 +12,7 @@
 /build
 .env
 server/passport/googleSetup.json
+server/passport/github.json
 src/.env
 
 # misc
