@@ -39,7 +39,9 @@
         "eject": "react-scripts eject",
         "dev-server": "nodemon server/index.js",
         "heroku": "node server/index.js",
-        "heroku:deploy": "git push heroku main"
+        "heroku:deploy": "git push heroku main",
+        "codebase:setup:env": "cp template.env .env",
+        "codebase:setup:githubAuth": "cp server/passport/github.template.json github.json"
     },
     "eslintConfig": {
         "extends": "react-app"
