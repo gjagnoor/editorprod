@@ -10,7 +10,7 @@ const googleOptions = {
             '/api/google/redirect' :
             `https://codebasev1.herokuapp.com/api/google/redirect`,
   clientID:
-        process.env.client_id || require('./googleSetup.json').web.client_id, // google plus
+        process.env.client_id || require('./googleSetup.json').web.client_id,
   clientSecret:
         process.env.client_secret ||
         require('./googleSetup.json').web.client_secret,
