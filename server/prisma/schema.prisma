@@ -9,5 +9,4 @@ generator client {
 
 model User {
   id      String      @id
-  name    String   @unique
 }

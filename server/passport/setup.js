@@ -1,16 +1,14 @@
 /* eslint-disable max-len */
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20');
+const GithubStrategy = require('passport-github2');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
 const googleOptions = {
-  callbackURL: '/api/google/redirect',
-  clientID:
-        process.env.client_id || require('./googleSetup.json').web.client_id,
-  clientSecret:
-        process.env.client_secret ||
-        require('./googleSetup.json').web.client_secret,
+  callbackURL: '/api/github/redirect',
+  clientID: process.env.clientID || require('./github.json').clientID,
+  clientSecret: process.env.client_secret ||
+        require('./github.json').clientSecret,
 };
 
 passport.serializeUser((user, done) => {
@@ -21,26 +19,26 @@ passport.deserializeUser((user, done) => {
   done(null, user);
 });
 
-passport.use(
-    new GoogleStrategy(
-        googleOptions,
-        async (accessToken, refreshToken, profile, done) => {
-          const user = await prisma.user.findUnique({
-            where: {
-              id: profile.id,
-            },
-          });
-          if (user) {
-            return done(null, user);
-          } else {
-            const newuser = await prisma.user.create({
-              data: {
-                id: profile.id,
-                name: profile.displayName,
-              },
-            });
-            return done(null, newuser);
-          }
-        },
-    ),
-);
+passport.use(new GithubStrategy({
+  clientID: process.env.clientIDGithub || require('./github.json').clientID,
+  clientSecret: process.env.clientSecretGithub || require('./github.json').clientSecret,
+  callbackURL: process.env.callbackURLGithub || 'http://localhost:7000/api/github/redirect',
+},
+async function(accessToken, refreshToken, profile, done) {
+  const user = await prisma.user.findUnique({
+    where: {
+      id: profile.id,
+    },
+  });
+  if (user) {
+    return done(null, user);
+  } else {
+    const newuser = await prisma.user.create({
+      data: {
+        id: profile.id,
+      },
+    });
+    return done(null, newuser);
+  }
+}));
+
