@@ -2,6 +2,7 @@
 const router = require('express').Router();
 const passport = require('passport');
 const db = require('../firestore/index.js');
+const s3 = require('../storageS3/index.js');
 require('dotenv').config();
 console.log('in', process.env.NODE_ENV);
 
