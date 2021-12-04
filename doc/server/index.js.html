@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>index.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../doc-style.css" />
+  <script src="../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../";
+    var thisFile = "server/index.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>index.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-comment">/* eslint-disable no-unused-vars */</span>
+<span class="hljs-keyword">const</span> express = <span class="hljs-built_in">require</span>(<span class="hljs-string">'express'</span>);
+<span class="hljs-keyword">const</span> path = <span class="hljs-built_in">require</span>(<span class="hljs-string">'path'</span>);
+<span class="hljs-keyword">const</span> app = express();
+<span class="hljs-keyword">const</span> routes = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./routes/index.js'</span>);
+<span class="hljs-keyword">const</span> passportSetup = <span class="hljs-built_in">require</span>(<span class="hljs-string">'./passport/setup.js'</span>);
+<span class="hljs-keyword">const</span> passport = <span class="hljs-built_in">require</span>(<span class="hljs-string">'passport'</span>);
+<span class="hljs-keyword">const</span> cookieSession = <span class="hljs-built_in">require</span>(<span class="hljs-string">'cookie-session'</span>);
+
+
+<span class="hljs-keyword">const</span> port = process.env.PORT || <span class="hljs-number">7000</span>;
+app.use(express.json());
+<span class="hljs-built_in">require</span>(<span class="hljs-string">'dotenv'</span>).config();
+app.use(
+    cookieSession({
+      <span class="hljs-attr">maxAge</span>: <span class="hljs-number">24</span> * <span class="hljs-number">60</span> * <span class="hljs-number">60</span> * <span class="hljs-number">1000</span>,
+      <span class="hljs-attr">keys</span>: [process.env.cookie],
+    }),
+);
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(express.static(path.join(__dirname, <span class="hljs-string">'../build'</span>)));
+app.use(<span class="hljs-string">'/api/'</span>, routes);
+
+app.get(<span class="hljs-string">'/'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span>(<span class="hljs-params">req, res</span>) </span>{
+  res.sendFile(path.join(__dirname, <span class="hljs-string">'../build'</span>, <span class="hljs-string">'index.html'</span>));
+});
+
+app.listen(port, () =&gt; <span class="hljs-built_in">console</span>.log(<span class="hljs-string">`app is now listening on port <span class="hljs-subst">${port}</span>`</span>));
+
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>

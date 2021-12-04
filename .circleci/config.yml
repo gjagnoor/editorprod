@@ -4,12 +4,12 @@ orbs:
     heroku: circleci/heroku@1.2.6
     cypress: cypress-io/cypress@1
 workflows:
-    heroku_deploy:
+    test:
         jobs:
             - cypress/run
+    deploy:
+        jobs:
             - heroku/deploy-via-git:
-                  requires:
-                      - cypress/run
                   filters:
                       branches:
                           only: main
