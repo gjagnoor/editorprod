@@ -3,30 +3,21 @@ orbs:
     node: circleci/node@2.0.2
     heroku: circleci/heroku@1.2.6
     cypress: cypress-io/cypress@1
+    docker: circleci/docker@2.0.1
 workflows:
+    cypress_test:
+        jobs:
+            - cypress/run
     heroku_deploy:
         jobs:
-            build:
-                docker:
-                    - image: cimg/node:17.2.0
-                steps:
-                    - setup_remote_docker:
-                          version: 19.03.13
-                    - checkout
-                    - run: docker build -t codebasev1 .
-                    - run:
-                          command: docker run codebasev1 cypress/run
-            build_and_deploy:
-                docker:
-                    - image: cimg/node:17.2.0
-                steps:
-                    - setup_remote_docker:
-                          version: 19.03.13
-                    - checkout
-                    - run: docker build .
-                    - heroku/install
-                    - run: heroku container:login
-                    - heroku/push-docker-image:
-                          process-types: web
-                    - heroku/release-docker-image:
-                          process-types: web
+            - docker/publish:
+                  image: gjagnoor/codebasev1
+                  update-description: true
+            - heroku/install
+            - run: heroku container:login
+            - heroku/push-docker-image:
+                  process-types: web
+            - heroku/release-docker-image:
+                  process-types: web
+        filters:
+            branches: main
