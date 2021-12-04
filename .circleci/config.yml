@@ -12,7 +12,6 @@ jobs:
     test:
         - cypress/run
     deploy:
-        - heroku container:login
         - heroku/push-docker-image:
             process-types: web
         - heroku/release-docker-image:
