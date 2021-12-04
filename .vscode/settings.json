@@ -2,5 +2,8 @@
     "[javascript]": {
         "editor.maxTokenizationLineLength": 2500,
         "editor.defaultFormatter": null
+    },
+    "[yaml]": {
+        "editor.defaultFormatter": null
     }
 }

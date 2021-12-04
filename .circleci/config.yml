@@ -6,18 +6,16 @@ orbs:
     docker: circleci/docker@2.0.1
 jobs:
     build:
-        - docker/publish:
-              image: gjagnoor/codebasev1
-              update-description: true
+        docker/publish:
+            - image: gjagnoor/codebasev1
+            - update-description: true
     test:
         - cypress/run
     deploy:
         - heroku/push-docker-image:
-            process-types: web
+              process-types: web
         - heroku/release-docker-image:
-            process-types: web
-        filters:
-            branches: main
+              process-types: web
 workflows:
     build_and_test:
         jobs:
@@ -26,3 +24,6 @@ workflows:
     deploy:
         jobs:
             - deploy
+        filters:
+            branches:
+                only: main
