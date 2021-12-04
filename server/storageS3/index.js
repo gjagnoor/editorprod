@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 const AWS = require('aws-sdk');
-const fs = require('fs');
-const path = require('path');
+// const fs = require('fs');
+// const path = require('path');
 require('dotenv').config();
 
 // configuring the AWS environment

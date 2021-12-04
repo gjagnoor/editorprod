@@ -1,5 +1,6 @@
 version: 2.1
 orbs:
+    node: circleci/node@2.0.2
     heroku: circleci/heroku@1.2.6
     cypress: cypress-io/cypress@1
 workflows:
@@ -9,3 +10,6 @@ workflows:
             - heroku/deploy-via-git:
                   requires:
                       - cypress/run
+                  filters:
+                      branches:
+                          only: main
