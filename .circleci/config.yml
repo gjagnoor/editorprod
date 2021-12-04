@@ -6,14 +6,15 @@ orbs:
 workflows:
     heroku_deploy:
         jobs:
-            - npm
-            - lint
-                requires: npm
-            - cypress/run
-                requires: lint
+            - lint:
+                  steps:
+                      - run:
+                            command: npm run lint
+            - cypress/run:
+                  requires: lint
             - heroku/deploy-via-git:
                   requires:
                       - cypress/run
                   filters:
-                    branches:
-                        only: main
+                      branches:
+                          only: main
