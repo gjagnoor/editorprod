@@ -6,10 +6,36 @@ orbs:
 workflows:
     heroku_deploy:
         jobs:
-            - cypress/run
-            - heroku/deploy-via-git:
-                  requires:
-                      - cypress/run
-                  filters:
-                      branches:
-                          only: main
+             build:
+                docker:
+                    - image: cimg/node:17.2.0
+                steps:
+                    # For using docker commands.
+                    - setup_remote_docker:
+                        version: 19.03.13
+                    # Build the docker image
+                    - checkout
+                    - run: docker build -t codebasev1 .
+                    # Run tests.
+                    - run:
+                        command: docker run codebasev1 cypress/run
+            # Build the docker image and deploy it to Heroku.
+            build_and_deploy:
+                docker:
+                - image: cimg/node:17.2.0
+                steps:
+                # For using docker commands.
+                - setup_remote_docker:
+                    version: 19.03.13
+
+                # Build the docker image
+                - checkout
+                - run: docker build .
+
+                # Deploy to Heroku
+                - heroku/install
+                - run: heroku container:login
+                - heroku/push-docker-image:
+                    process-types: web
+                - heroku/release-docker-image:
+                    process-types: web

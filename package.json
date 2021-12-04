@@ -17,6 +17,7 @@
         "aws-sdk": "^2.1042.0",
         "axios": "^0.24.0",
         "cookie-session": "^1.4.0",
+        "docker-compose": "^0.23.14",
         "dotenv": "^10.0.0",
         "eslint": "^7.11.0",
         "eslint-config-google": "^0.14.0",

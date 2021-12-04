@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>commands.js</title>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <link rel="stylesheet" media="all" href="../../doc-style.css" />
+  <script src="../../doc-filelist.js"></script>
+  <script>
+    var relativeDir = "../../";
+    var thisFile = "cypress/support/commands.js";
+    var defaultSidebar = true;
+  </script>
+  <script src="../../doc-script.js"></script>
+
+</head>
+<body>
+  <div id="sidebar_wrapper">
+    <div id="sidebar_switch">
+      <span class="tree">Files</span>
+      <span class="headings">Headings</span>
+    </div>
+    <div id="tree"></div>
+    <div id="headings">
+
+    </div>
+  </div>
+  <div id="sidebar-toggle"></div>
+  <div id="container">
+    <div class="background highlight"></div>
+<table cellpadding="0" cellspacing="0">
+  <tbody>
+    
+      <tr>
+        <td class="docs">
+          <h1>commands.js</h1>
+        </td>
+        <td class="code highlight"></td>
+      </tr>
+    
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-1" id="section-1"></a>
+</div>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript"><span class="hljs-comment">/* eslint-disable max-len */</span>
+</pre>
+        </td>
+      </tr>
+    
+      <tr>
+        <td class="docs">
+          <div class="pilwrap">
+  <a class="pilcrow" href="#section-2" id="section-2"></a>
+</div>
+<hr>
+<p>This example commands.js shows you how to
+create various custom commands and overwrite
+existing commands.</p>
+<p>For more comprehensive examples of custom
+commands please read more here:
+https://on.cypress.io/custom-commands</p>
+<hr>
+<p>-- This is a parent command --
+Cypress.Commands.add('login', (email, password) =&gt; { ... })</p>
+<p>-- This is a child command --
+Cypress.Commands.add('drag', { prevSubject: 'element'}, (subject, options) =&gt; { ... })</p>
+<p>-- This is a dual command --
+Cypress.Commands.add('dismiss', { prevSubject: 'optional'}, (subject, options) =&gt; { ... })</p>
+<p>-- This will overwrite an existing command --
+Cypress.Commands.overwrite('visit', (originalFn, url, options) =&gt; { ... })</p>
+
+        </td>
+        <td class="code highlight">
+          <pre class="javascript">
+</pre>
+        </td>
+      </tr>
+    
+  </tbody>
+</table>
+
+  </div>
+</body>
+</html>
