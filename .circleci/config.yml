@@ -4,20 +4,26 @@ orbs:
     heroku: circleci/heroku@1.2.6
     cypress: cypress-io/cypress@1
     docker: circleci/docker@2.0.1
-workflows:
-    cypress_test:
-        jobs:
-            - cypress/run
-    heroku_deploy:
-        jobs:
-            - docker/publish:
-                  image: gjagnoor/codebasev1
-                  update-description: true
-            - heroku/install
-            - heroku container:login
-            - heroku/push-docker-image:
-                  process-types: web
-            - heroku/release-docker-image:
-                  process-types: web
+jobs:
+    build:
+        - docker/publish:
+              image: gjagnoor/codebasev1
+              update-description: true
+    test:
+        - cypress/run
+    deploy:
+        - heroku container:login
+        - heroku/push-docker-image:
+            process-types: web
+        - heroku/release-docker-image:
+            process-types: web
         filters:
             branches: main
+workflows:
+    build_and_test:
+        jobs:
+            - build
+            - test
+    deploy:
+        jobs:
+            - deploy
