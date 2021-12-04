@@ -14,6 +14,7 @@
 server/passport/googleSetup.json
 server/passport/github.json
 src/.env
+.circleci/old.config.yml
 
 # misc
 .DS_Store
@@ -23,5 +24,3 @@ src/.env
 .env.production.local
 
 npm-debug.log*
-yarn-debug.log*
-yarn-error.log*

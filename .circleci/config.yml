@@ -1,7 +1,11 @@
 version: 2.1
 orbs:
     heroku: circleci/heroku@1.2.6
+    cypress: cypress-io/cypress@1
 workflows:
     heroku_deploy:
         jobs:
-            - heroku/deploy-via-git
+            - cypress/run
+            - heroku/deploy-via-git:
+                  requires:
+                      - cypress/run
