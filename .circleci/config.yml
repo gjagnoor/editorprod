@@ -14,7 +14,7 @@ workflows:
                   image: gjagnoor/codebasev1
                   update-description: true
             - heroku/install
-            - run: heroku container:login
+            - heroku container:login
             - heroku/push-docker-image:
                   process-types: web
             - heroku/release-docker-image:
