@@ -10,7 +10,7 @@ console.log('in', process.env.NODE_ENV);
 const domain =
     process.env.NODE_ENV === 'development' ?
         'http://localhost:3000' :
-        'https://codebasev1.herokuapp.com';
+        'https://editorprod.herokuapp.com';
 const authenticationOptions = {
   scope: ['user:email'],
 };
