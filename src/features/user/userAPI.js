@@ -4,7 +4,7 @@ import axios from 'axios';
 export async function logoutUser() {
   return await axios
       .get(`/api/logout`)
-      .then((res) => res.data)
+      .then((res) => null)
       .catch((err) => console.error(err));
 }
 

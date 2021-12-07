@@ -12,7 +12,8 @@ const port = process.env.PORT || 7000;
 app.use(express.json());
 require('dotenv').config();
 app.use(
-    cookieSession({
+  cookieSession({
+      name: 'passportCookie',
       maxAge: 24 * 60 * 60 * 1000,
       keys: [process.env.cookie],
     }),
