@@ -10,6 +10,7 @@ import NavigationIcon from '@mui/icons-material/Navigation';
 import Navigation from './features/navbar/Navigation.js';
 import './App.css';
 import Home from './Home.js';
+import Editor from './features/editor/Editor.js';
 
 function App({user, logout, fetchUser}) {
   React.useEffect(() => {
@@ -21,6 +22,7 @@ function App({user, logout, fetchUser}) {
       <Navigation />
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/editor' element={<Editor />}/>
       </Routes>
       <Fab variant="extended" style={{position: 'fixed', bottom: '1em', left: '1em'}} href="#">
         <NavigationIcon sx={{mr: 1}} />
