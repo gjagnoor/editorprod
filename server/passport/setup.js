@@ -4,34 +4,20 @@ const GithubStrategy = require('passport-github2');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 
-passport.serializeUser((user, done) => {
-  done(null, user);
+passport.serializeUser((profile, done) => {
+  done(null, profile);
 });
 
-passport.deserializeUser((user, done) => {
-  done(null, user);
+passport.deserializeUser((profile, done) => {
+  done(null, profile);
 });
 
 passport.use(new GithubStrategy({
-  clientID: process.env.clientIDGithub || require('./github.json').clientID,
-  clientSecret: process.env.clientSecretGithub || require('./github.json').clientSecret,
+  clientID: process.env.clientIDGithub || require('./github.json').clientIDGithub,
+  clientSecret: process.env.clientSecretGithub || require('./github.json').clientSecretGithub,
   callbackURL: process.env.callbackURLGithub || 'http://localhost:7000/api/github/redirect',
 },
 async function(accessToken, refreshToken, profile, done) {
-  const user = await prisma.user.findUnique({
-    where: {
-      id: profile.id,
-    },
-  });
-  if (user) {
-    return done(null, user);
-  } else {
-    const newuser = await prisma.user.create({
-      data: {
-        id: profile.id,
-      },
-    });
-    return done(null, newuser);
-  }
+  return done(null, profile);
 }));
 

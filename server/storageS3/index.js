@@ -1,7 +1,7 @@
 /* eslint-disable require-jsdoc */
 const AWS = require('aws-sdk');
-// const fs = require('fs');
-// const path = require('path');
+const fs = require('fs');
+const path = require('path');
 require('dotenv').config();
 
 // configuring the AWS environment
@@ -13,25 +13,25 @@ AWS.config.update({
 
 const s3 = new AWS.S3();
 /* uploading a file */
-// const filePath = 'server/storageS3/file.txt';
+const filePath = 'server/storageS3/file.txt';
 
 // configuring parameters
-// const params = {
-//   Bucket: 'codebasev1',
-//   Body: fs.createReadStream(filePath),
-//   Key: `folder/${path.basename(filePath).split('.')[0]}`,
-// };
+const params = {
+  Bucket: 'editorv1',
+  Body: fs.createReadStream(filePath),
+  Key: `folder/${path.basename(filePath).split('.')[0]}`,
+};
 
-// s3.upload(params, function(err, data) {
-//   // handle error
-//   if (err) {
-//     console.log('Error', err);
-//   }
-//   // success
-//   if (data) {
-//     console.log('Uploaded in:', data.Location);
-//   }
-// });
+s3.upload(params, function(err, data) {
+  // handle error
+  if (err) {
+    console.log('Error', err);
+  }
+  // success
+  if (data) {
+    console.log('Uploaded in:', data.Location);
+  }
+});
 
 /* reading a file or a set of files */
 // const params = {

@@ -2,7 +2,8 @@
 const router = require('express').Router();
 const passport = require('passport');
 const db = require('../firestore/index.js');
-// const s3 = require('../storageS3/index.js');
+const redis = require('../redis/index.js');
+const s3 = require('../storageS3/index.js');
 require('dotenv').config();
 console.log('in', process.env.NODE_ENV);
 
@@ -50,7 +51,7 @@ router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
 // });
 // testing firestore
 db.collection('userConfig').doc('9382293kjdnkjaendk').get().then((snapshot) => {
-  console.log(snapshot.data());
+  console.log('firestore logging data:', snapshot.data());
 });
 
 module.exports = router;

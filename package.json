@@ -42,6 +42,7 @@
         "heroku": "node server/index.js",
         "heroku:deploy": "git push heroku main",
         "lint": "eslint '**/*.js' --fix",
+        "prisma": "prisma migrate dev --name init",
         "codebase:setup:env": "cp template.env .env",
         "codebase:setup:githubAuth": "cp server/passport/github.template.json github.json"
     },
