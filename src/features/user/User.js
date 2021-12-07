@@ -16,16 +16,22 @@ function User({user, logout, fetchUser}) {
     <div>
       {user.info ? (
         <Link to='/'>
-          <AnchorButton className="bp3-minimal" icon="log-out" text="Logout" onClick={logout} href={process.env.NODE_ENV === 'development' ?
+          <AnchorButton icon="log-out" text="Logout" onClick={logout} href={process.env.NODE_ENV === 'development' ?
                         `http://localhost:3000` :
-              `https://editorprod.herokuapp.com`}/>
+            `https://editorprod.herokuapp.com`}
+          className='bp3-minimal'
+          style={{color: 'white'}}
+          />
         </Link>
             ) : (
-              <AnchorButton icon="log-in" className="bp3-minimal" text="Login" href={
+              <AnchorButton icon="log-in" text="Login" href={
                     process.env.NODE_ENV === 'development' ?
                         `http://localhost:7000/api/github` :
               `https://editorprod.herokuapp.com/api/github`
-              } />
+              }
+              className='bp3-minimal'
+              style={{color: 'white'}}
+              />
         )}
     </div>
   );

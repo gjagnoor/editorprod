@@ -17,13 +17,14 @@ function Navigation({user, logout, fetchUser}) {
       {
           window.location.pathname !== '/' ?
       <Navbar.Group align={Alignment.LEFT}>
-        <Navbar.Heading> EDITOR </Navbar.Heading>
+        <h2 className='app-heading'> EDITOR </h2>
         <Navbar.Divider />
         <AnchorButton
-          className="bp3-button bp3-minimal"
           role="button"
           icon="home"
           href="/"
+          className='bp3-minimal'
+          style={{color: 'white'}}
         >
                     Home
         </AnchorButton>

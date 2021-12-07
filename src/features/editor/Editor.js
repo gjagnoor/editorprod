@@ -3,11 +3,33 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import {connect} from 'react-redux';
+import {Button, ButtonGroup} from '@blueprintjs/core';
 
 function Editor() {
   return (
-    <div className="App-header">
-      <h2 className='app-heading'>EDITOR _</h2>
+    <div>
+      <ButtonGroup vertical={true} style={{margin: '15em 0em 0em 1em'}} >
+        <Button
+          icon='add'
+          intent='primary'
+        >
+        </Button>
+        <Button
+          icon='cloud'
+          intent='primary'
+        >
+        </Button>
+        <Button
+          icon='pin'
+          intent='primary'
+        >
+        </Button>
+        <Button
+          icon='download'
+          intent='primary'
+        >
+        </Button>
+      </ButtonGroup>
     </div>
   );
 }
