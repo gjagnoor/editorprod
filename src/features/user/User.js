@@ -16,10 +16,10 @@ function User({user, logout, fetchUser}) {
       {user.info ? (
             <Button className="bp3-minimal" icon="log-out" text="Logout" onClick={logout} />
             ) : (
-              <AnchorButton className="bp3-minimal" icon="log-in" text="Login" href={
+              <AnchorButton icon="log-in" className="bp3-minimal" text="Login" href={
                     process.env.NODE_ENV === 'development' ?
                         `http://localhost:7000/api/github` :
-                        `https://editorprod.herokuapp.com/api/github`
+              `https://editorprod.herokuapp.com/api/github`
               } />
         )}
     </div>

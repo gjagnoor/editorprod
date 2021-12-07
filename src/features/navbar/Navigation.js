@@ -13,9 +13,11 @@ function Navigation({user, logout, fetchUser}) {
   }, [fetchUser]);
 
   return (
-    <Navbar>
+    <Navbar id='navbar'>
+      {
+          window.location.pathname !== '/' ?
       <Navbar.Group align={Alignment.LEFT}>
-        <Navbar.Heading> [ ] Codebase</Navbar.Heading>
+        <Navbar.Heading> EDITOR </Navbar.Heading>
         <Navbar.Divider />
         <AnchorButton
           className="bp3-button bp3-minimal"
@@ -25,7 +27,8 @@ function Navigation({user, logout, fetchUser}) {
         >
                     Home
         </AnchorButton>
-      </Navbar.Group>
+      </Navbar.Group>: null
+      }
       <Navbar.Group align={Alignment.RIGHT}>
         <Navbar.Divider />
         <User />
