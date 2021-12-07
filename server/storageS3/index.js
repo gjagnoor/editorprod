@@ -35,7 +35,7 @@ s3.upload(params, function(err, data) {
 
 /* reading a file or a set of files */
 // const params = {
-//   Bucket: 'codebasev1', // your bucket name,
+//   Bucket: 'editorv1', // your bucket name,
 //   Key: 'folder/file', // path to the object you're looking for
 // };
 

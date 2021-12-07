@@ -19,7 +19,7 @@ function User({user, logout, fetchUser}) {
               <AnchorButton className="bp3-minimal" icon="log-in" text="Login" href={
                     process.env.NODE_ENV === 'development' ?
                         `http://localhost:7000/api/github` :
-                        `https://codebasev1.herokuapp.com/api/github`
+                        `https://editorprod.herokuapp.com/api/github`
               } />
         )}
     </div>
