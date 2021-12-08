@@ -1,9 +1,9 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable react/prop-types */
-import React, {useEffect} from 'react';
+import React from 'react';
 import {connect} from 'react-redux';
-import {writeCodeOnState, cacheProjectAsync} from './projectSlice.js';
+import {writeCodeOnState} from './projectSlice.js';
 import MonacoEditor from 'react-monaco-editor';
 const height = '30em';
 const width = '30em';
