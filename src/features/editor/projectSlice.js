@@ -57,22 +57,41 @@ export const projectSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
+        .addCase(fetchProjectsAsync.pending, (state) => {
+          state.loading = true;
+          return state;
+        })
         .addCase(fetchProjectsAsync.fulfilled, (state, action) => {
           state.all = action.payload;
+          state.loading = false;
+          return state;
+        })
+        .addCase(updateProjectAsync.pending, (state) => {
+          state.loading = true;
           return state;
         })
         .addCase(updateProjectAsync.fulfilled, (state, action) => {
           state.current = action.payload.filter((project) => project.name === state.current.name)[0];
           state.all = action.payload;
-          console.log('updated state', state.all.filter((project) => project.name === state.current.name)[0]);
+          state.loading = false;
+          return state;
+        })
+        .addCase(postProjectAsync.pending, (state) => {
+          state.loading = true;
           return state;
         })
         .addCase(postProjectAsync.fulfilled, (state, action) => {
           state.all = action.payload;
+          state.loading = false;
+          return state;
+        })
+        .addCase(deleteProjectAsync.pending, (state) => {
+          state.loading = true;
           return state;
         })
         .addCase(deleteProjectAsync.fulfilled, (state, action) => {
           state.all = action.payload;
+          state.loading = false;
           return state;
         });
   },
