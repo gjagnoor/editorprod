@@ -4,9 +4,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Button, Overlay} from '@blueprintjs/core';
-import {loadProjectOnState} from './projectSlice';
+import {deleteProjectAsync, loadProjectOnState} from './projectSlice';
 
-function Projects({showProjects, setShowProjects, all, loadProject}) {
+function Projects({showProjects, setShowProjects, all, loadProject, deleteProject}) {
   return (
     <Overlay
       isOpen={showProjects}
@@ -23,6 +23,7 @@ function Projects({showProjects, setShowProjects, all, loadProject}) {
                 className='bp3-minimal'
                 icon='small-cross'
                 intent='danger'
+                onClick={() => deleteProject(project)}
               />
               <Button className='bp3-minimal' style={{color: 'white'}} onClick={() => loadProject(project)}>{project.name}</Button>
             </div>;
@@ -50,6 +51,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     loadProject: (project) => dispatch(loadProjectOnState(project)),
+    deleteProject: (project) => dispatch(deleteProjectAsync(project)),
   };
 };
 

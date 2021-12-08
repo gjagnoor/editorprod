@@ -17,25 +17,7 @@ const authCheck = (req, res, next) => {
   }
 };
 
-router.get('/hello', async (req, res, next) => {
-  res.json('I\'m here');
-});
-
 router.post('/project', authCheck, async (req, res, next) => {
-  console.log('req.body', req.body);
-  // to split into 3 functions after this works
-  /*
-          {
-              name: ,
-              userID: ,
-              key: ,
-              content: { // goes to S3
-                  html: ``,
-                  css: ``,
-                  js: ``
-              }
-          }
-    */
   const paramsHTML = {
     Bucket: 'editorv1',
     Body: req.body.content.html,
@@ -145,6 +127,54 @@ router.get('/projects', authCheck, async (req, res, next) => {
       userID: req.user.id,
     },
   }).catch((err) => console.error(err));
+  const all = await Promise.all(allProjects.map(async (project) => {
+    const dataHTML = await s3.getObject({
+      Bucket: 'editorv1',
+      Key: `${req.user.id}/${project.name}/structure.html`,
+    }).promise();
+    const dataJS = await s3.getObject({
+      Bucket: 'editorv1',
+      Key: `${req.user.id}/${project.name}/interaction.js`,
+    }).promise();
+    const dataCSS = await s3.getObject({
+      Bucket: 'editorv1',
+      Key: `${req.user.id}/${project.name}/style.css`,
+    }).promise();
+    project.content = {
+      html: dataHTML.Body.toString('utf-8'),
+      js: dataJS.Body.toString('utf-8'),
+      css: dataCSS.Body.toString('utf-8'),
+    };
+    return project;
+  }));
+  return res.json(all);
+});
+
+router.delete(`/project`, authCheck, async (req, res, next) => {
+  const [deletedProject, allProjects] = await prisma.$transaction([
+    prisma.project.delete({
+      where: {
+        key: req.body.project.key,
+      },
+    }),
+    prisma.project.findMany({
+      where: {
+        userID: req.user.id,
+      },
+    }),
+  ]).catch((err) => console.error(err));
+  await s3.deleteObject({
+    Bucket: 'editorv1',
+    Key: `${req.user.id}/${req.body.project.name}/structure.html`,
+  }).promise();
+  await s3.deleteObject({
+    Bucket: 'editorv1',
+    Key: `${req.user.id}/${req.body.project.name}/style.css`,
+  }).promise();
+  await s3.deleteObject({
+    Bucket: 'editorv1',
+    Key: `${req.user.id}/${req.body.project.name}/interaction.js`,
+  }).promise();
   const all = await Promise.all(allProjects.map(async (project) => {
     const dataHTML = await s3.getObject({
       Bucket: 'editorv1',

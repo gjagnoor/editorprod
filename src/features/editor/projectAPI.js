@@ -21,10 +21,10 @@ export async function postProject(project) {
       .catch((err) => console.error(err));
 }
 
-export async function deleteProject(projectName) {
+export async function deleteProject(project) {
   return await axios.delete('/api/project', {
     data: {
-      projectName,
+      project,
     },
   })
       .then((res) => res.data)

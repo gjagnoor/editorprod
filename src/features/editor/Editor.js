@@ -33,11 +33,6 @@ function Editor({current, all, saveProject}) {
           onClick={() => setShowProjects(true)}
         >
         </Button>
-        <Button
-          icon='download'
-          intent='primary'
-        >
-        </Button>
       </ButtonGroup>
       <AddProjectForm showAddForm={showAddForm} setShowAddForm={setShowAddForm}
       />
