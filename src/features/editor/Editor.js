@@ -1,17 +1,21 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, {useState} from 'react';
 import {connect} from 'react-redux';
 import {Button, ButtonGroup} from '@blueprintjs/core';
+import {postProjectAsync, writeName} from './projectSlice';
 
-function Editor() {
+function Editor({current, all, addProject, saveName}) {
+  const [showAddForm, setShowAddForm] = useState(false);
+  console.log('empty or not: ', current.name);
   return (
     <div>
-      <ButtonGroup vertical={true} style={{margin: '15em 0em 0em 1em'}} >
+      <ButtonGroup vertical={true} style={{margin: '10% 0% 0% 1%'}} >
         <Button
           icon='add'
           intent='primary'
+          onClick={() => setShowAddForm(true)}
         >
         </Button>
         <Button
@@ -30,16 +34,32 @@ function Editor() {
         >
         </Button>
       </ButtonGroup>
+      {
+        showAddForm ? <div>
+          <input
+            type='text'
+            value={current.name}
+            onChange={(evt) => saveName(evt.target.value)}
+          />
+          <Button type='submit' onSubmit={() => addProject(current)} text='Create New Project'/>
+        </div> : null
+      }
     </div>
   );
 }
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    current: state.project.current,
+    all: state.project.all,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  return {};
+  return {
+    saveName: (name) => dispatch(writeName(name)),
+    addProject: (project) => dispatch(postProjectAsync(project)),
+  };
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Editor);

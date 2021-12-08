@@ -2,7 +2,8 @@
 const express = require('express');
 const path = require('path');
 const app = express();
-const routes = require('./routes/index.js');
+const authRoutes = require('./routes/index.js');
+const projectRoutes = require('./routes/project.js');
 const passportSetup = require('./passport/setup.js');
 const passport = require('passport');
 const cookieSession = require('cookie-session');
@@ -21,7 +22,8 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.static(path.join(__dirname, '../build')));
-app.use('/api/', routes);
+app.use('/api/', authRoutes);
+app.use('/api/', projectRoutes);
 
 app.get('/', function(req, res) {
   res.sendFile(path.join(__dirname, '../build', 'index.html'));

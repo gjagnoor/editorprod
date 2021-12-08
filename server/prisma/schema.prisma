@@ -7,6 +7,9 @@ generator client {
   provider = "prisma-client-js"
 }
 
-model User {
-  id      String      @id
+model Project {
+  id      Int        @id
+  name    String     @unique
+  userID  String     
+  key     String     @unique
 }
