@@ -1,3 +1,4 @@
+/* eslint-disable require-jsdoc */
 /* eslint-disable new-cap */
 const router = require('express').Router();
 const db = require('../firestore/index.js');
@@ -50,27 +51,7 @@ router.post('/project', authCheck, async (req, res, next) => {
       },
     }),
   ]).catch((err) => console.error(err));
-  const all = await Promise.all(allProjects.map(async (project) => {
-    const dataHTML = await s3.getObject({
-      Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/structure.html`,
-    }).promise();
-    const dataJS = await s3.getObject({
-      Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/interaction.js`,
-    }).promise();
-    const dataCSS = await s3.getObject({
-      Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/style.css`,
-    }).promise();
-    project.content = {
-      html: dataHTML.Body.toString('utf-8'),
-      js: dataJS.Body.toString('utf-8'),
-      css: dataCSS.Body.toString('utf-8'),
-    };
-    return project;
-  }));
-  console.log('all::: ', all);
+  const all = await getAllProjects(allProjects, req.user.id);
   return res.json(all);
 });
 
@@ -98,26 +79,7 @@ router.put('/project', authCheck, async (req, res, next) => {
       userID: req.user.id,
     },
   }).catch((err) => console.error(err));
-  const all = await Promise.all(allProjects.map(async (project) => {
-    const dataHTML = await s3.getObject({
-      Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/structure.html`,
-    }).promise();
-    const dataJS = await s3.getObject({
-      Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/interaction.js`,
-    }).promise();
-    const dataCSS = await s3.getObject({
-      Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/style.css`,
-    }).promise();
-    project.content = {
-      html: dataHTML.Body.toString('utf-8'),
-      js: dataJS.Body.toString('utf-8'),
-      css: dataCSS.Body.toString('utf-8'),
-    };
-    return project;
-  }));
+  const all = await getAllProjects(allProjects, req.user.id);
   return res.json(all);
 });
 
@@ -127,26 +89,7 @@ router.get('/projects', authCheck, async (req, res, next) => {
       userID: req.user.id,
     },
   }).catch((err) => console.error(err));
-  const all = await Promise.all(allProjects.map(async (project) => {
-    const dataHTML = await s3.getObject({
-      Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/structure.html`,
-    }).promise();
-    const dataJS = await s3.getObject({
-      Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/interaction.js`,
-    }).promise();
-    const dataCSS = await s3.getObject({
-      Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/style.css`,
-    }).promise();
-    project.content = {
-      html: dataHTML.Body.toString('utf-8'),
-      js: dataJS.Body.toString('utf-8'),
-      css: dataCSS.Body.toString('utf-8'),
-    };
-    return project;
-  }));
+  const all = await getAllProjects(allProjects, req.user.id);
   return res.json(all);
 });
 
@@ -175,18 +118,23 @@ router.delete(`/project`, authCheck, async (req, res, next) => {
     Bucket: 'editorv1',
     Key: `${req.user.id}/${req.body.project.name}/interaction.js`,
   }).promise();
-  const all = await Promise.all(allProjects.map(async (project) => {
+  const all = await getAllProjects(allProjects, req.user.id);
+  return res.json(all);
+});
+
+async function getAllProjects(allProjects, userID) {
+  return await Promise.all(allProjects.map(async (project) => {
     const dataHTML = await s3.getObject({
       Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/structure.html`,
+      Key: `${userID}/${project.name}/structure.html`,
     }).promise();
     const dataJS = await s3.getObject({
       Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/interaction.js`,
+      Key: `${userID}/${project.name}/interaction.js`,
     }).promise();
     const dataCSS = await s3.getObject({
       Bucket: 'editorv1',
-      Key: `${req.user.id}/${project.name}/style.css`,
+      Key: `${userID}/${project.name}/style.css`,
     }).promise();
     project.content = {
       html: dataHTML.Body.toString('utf-8'),
@@ -195,7 +143,6 @@ router.delete(`/project`, authCheck, async (req, res, next) => {
     };
     return project;
   }));
-  return res.json(all);
-});
+}
 
 module.exports = router;

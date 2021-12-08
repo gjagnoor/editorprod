@@ -38,7 +38,7 @@ function Editor({current, all, saveProject}) {
       />
       <Projects showProjects={showProjects} setShowProjects={setShowProjects} />
       {
-        current.key ? <Monaco /> : null
+        current.key ? <Monaco /> : <p style={{display: 'flex', justifyContent: 'center'}}>Please Select or Create a New Project</p>
       }
     </div>
   );
