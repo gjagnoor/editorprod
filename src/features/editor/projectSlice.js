@@ -13,6 +13,7 @@ const initialState = {
     },
   },
   all: [],
+  renderProject: ``,
   loading: false,
 };
 
@@ -52,6 +53,10 @@ export const projectSlice = createSlice({
     },
     writeCodeOnState(state, action) {
       state.current.content[action.payload.language] = action.payload.content;
+      return state;
+    },
+    writeRenderProject(state, action) {
+      state.renderProject = action.payload;
       return state;
     },
   },
@@ -97,6 +102,6 @@ export const projectSlice = createSlice({
   },
 });
 
-export const {writeName, loadProjectOnState, writeCodeOnState} = projectSlice.actions;
+export const {writeName, loadProjectOnState, writeCodeOnState, writeRenderProject} = projectSlice.actions;
 
 export default projectSlice.reducer;
