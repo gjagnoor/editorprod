@@ -4,7 +4,8 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
-import {fetchUserAsync, logoutAsync} from './features/user/userSlice.js';
+import {fetchUserAsync} from './features/user/userSlice.js';
+import {fetchProjectsAsync} from './features/editor/projectSlice.js';
 import Fab from '@mui/material/Fab';
 import NavigationIcon from '@mui/icons-material/Navigation';
 import Navigation from './features/navbar/Navigation.js';
@@ -12,11 +13,11 @@ import './App.css';
 import Home from './Home.js';
 import Editor from './features/editor/Editor.js';
 
-function App({user, logout, fetchUser}) {
+function App({user, fetchUser, loadAllProjects}) {
   React.useEffect(() => {
     fetchUser();
-  }, [fetchUser]);
-
+    loadAllProjects();
+  }, [fetchUser, loadAllProjects]);
   return (
     <Router>
       <Navigation />
@@ -40,8 +41,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    logout: () => dispatch(logoutAsync()),
     fetchUser: () => dispatch(fetchUserAsync()),
+    loadAllProjects: () => dispatch(fetchProjectsAsync()),
   };
 };
 

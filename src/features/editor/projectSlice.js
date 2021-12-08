@@ -13,6 +13,7 @@ const initialState = {
     },
   },
   all: [],
+  loading: false,
 };
 
 export const fetchProjectsAsync = createAsyncThunk('projects/fetch', async () => {
@@ -45,7 +46,12 @@ export const projectSlice = createSlice({
       return state;
     },
     loadProjectOnState(state, action) {
-      state.current = action.payload;
+      console.log(action.payload);
+      state.current = Object.assign(action.payload);
+      return state;
+    },
+    writeCodeOnState(state, action) {
+      state.current.content[action.payload.language] = action.payload.content;
       return state;
     },
   },
@@ -58,6 +64,7 @@ export const projectSlice = createSlice({
         .addCase(updateProjectAsync.fulfilled, (state, action) => {
           state.current = action.payload.filter((project) => project.name === state.current.name)[0];
           state.all = action.payload;
+          console.log('updated state', state.all.filter((project) => project.name === state.current.name)[0]);
           return state;
         })
         .addCase(postProjectAsync.fulfilled, (state, action) => {
@@ -71,6 +78,6 @@ export const projectSlice = createSlice({
   },
 });
 
-export const {writeName, loadProjectOnState} = projectSlice.actions;
+export const {writeName, loadProjectOnState, writeCodeOnState} = projectSlice.actions;
 
 export default projectSlice.reducer;
