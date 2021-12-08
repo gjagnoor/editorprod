@@ -4,8 +4,6 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fetchUserAsync, logoutAsync} from './userSlice.js';
-import {AnchorButton} from '@blueprintjs/core';
-import {Link} from 'react-router-dom';
 
 function User({user, logout, fetchUser}) {
   React.useEffect(() => {
@@ -15,23 +13,28 @@ function User({user, logout, fetchUser}) {
   return (
     <div>
       {user.info ? (
-        <Link to='/'>
-          <AnchorButton icon="log-out" text="Logout" onClick={logout} href={process.env.NODE_ENV === 'development' ?
+          <a
+            className="bp3-button bp3-icon-log-out bp3-minimal"
+            onClick={logout}
+            href={process.env.NODE_ENV === 'development' ?
                         `http://localhost:3000` :
             `https://editorprod.herokuapp.com`}
-          className='bp3-minimal'
-          style={{color: 'white'}}
-          />
-        </Link>
-            ) : (
-              <AnchorButton icon="log-in" text="Login" href={
+            style={{color: 'white'}}
+          >
+            Logout
+          </a>
+      ) : (
+          <a
+            className='bp3-button bp3-icon-log-in bp3-minimal'
+            href={
                     process.env.NODE_ENV === 'development' ?
                         `http://localhost:7000/api/github` :
               `https://editorprod.herokuapp.com/api/github`
-              }
-              className='bp3-minimal'
-              style={{color: 'white'}}
-              />
+            }
+            style={{color: 'white'}}
+          >
+            Login
+          </a>
         )}
     </div>
   );

@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {fetchProjects, postProject, updateProject, deleteProject} from './projectAPI.js';
-
 const initialState = {
   new: {
     name: '',
@@ -12,7 +11,7 @@ const initialState = {
       css: '',
     },
   },
-  current: {
+  current: JSON.parse(window.sessionStorage.getItem('currentProject')) || {
     name: '',
     key: '',
     content: {
@@ -65,6 +64,7 @@ export const projectSlice = createSlice({
       return state;
     },
     writeCodeOnState(state, action) {
+      console.log('Im reaching up till here');
       state.current.content[action.payload.language] = action.payload.content;
       return state;
     },

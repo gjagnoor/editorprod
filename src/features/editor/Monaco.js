@@ -1,13 +1,16 @@
 /* eslint-disable max-len */
 /* eslint-disable require-jsdoc */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, {useEffect} from 'react';
 import {connect} from 'react-redux';
 import {writeCodeOnState} from './projectSlice.js';
 import MonacoEditor from 'react-monaco-editor';
 const height = '30em';
 const width = '30em';
 function Monaco({current, writeCode}) {
+  useEffect(() => {
+    window.sessionStorage.setItem('currentProject', JSON.stringify(current));
+  }, [current]);
   return (
     <div
       style={{

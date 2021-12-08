@@ -4,11 +4,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fetchUserAsync, logoutAsync} from '../user/userSlice.js';
-import {Navbar, Alignment, AnchorButton} from '@blueprintjs/core';
+import {Navbar, Alignment} from '@blueprintjs/core';
 import User from '../user/User.js';
 
 function Navigation({user}) {
-  console.log('user', user);
   return (
     <Navbar id='navbar'>
       {
@@ -16,28 +15,26 @@ function Navigation({user}) {
       <Navbar.Group align={Alignment.LEFT}>
         <h2 className='app-heading'> EDITOR </h2>
         <Navbar.Divider />
-        <AnchorButton
-          role="button"
-          icon="home"
-          href="/"
-          className='bp3-minimal'
+        <a
+          className='bp3-button bp3-icon-home bp3-minimal'
           style={{color: 'white'}}
+          href='/'
         >
-                    Home
-        </AnchorButton>
-      </Navbar.Group>: null
+            Home
+        </a>
+      </Navbar.Group> : null
       }
       <Navbar.Group align={Alignment.RIGHT}>
         {
-              user ? <AnchorButton
-                role="button"
-                icon="code"
-                href="/editor"
-                className='bp3-minimal'
-                style={{color: 'white'}}
-              >
-                    Editor
-              </AnchorButton> : null
+          user ?
+            <a
+              className='bp3-button bp3-icon-code bp3-minimal'
+              style={{color: 'white'}}
+              href='/editor'
+            >
+              Editor
+            </a> :
+               null
         }
         <Navbar.Divider />
         <User />
