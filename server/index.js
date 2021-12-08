@@ -25,8 +25,12 @@ app.use(express.static(path.join(__dirname, '../build')));
 app.use('/api/', authRoutes);
 app.use('/api/', projectRoutes);
 
-app.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname, '../build', 'index.html'));
+app.get('/*', function(req, res) {
+  res.sendFile(path.join(__dirname, '../build', 'index.html'), function(err) {
+    if (err) {
+      res.status(500).send(err);
+    }
+  });
 });
 
 app.listen(port, () => console.log(`app is now listening on port ${port}`));
