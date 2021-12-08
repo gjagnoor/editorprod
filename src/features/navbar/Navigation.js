@@ -7,11 +7,8 @@ import {fetchUserAsync, logoutAsync} from '../user/userSlice.js';
 import {Navbar, Alignment, AnchorButton} from '@blueprintjs/core';
 import User from '../user/User.js';
 
-function Navigation({user, logout, fetchUser}) {
-  React.useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
-
+function Navigation({user}) {
+  console.log('user', user);
   return (
     <Navbar id='navbar'>
       {
@@ -31,6 +28,17 @@ function Navigation({user, logout, fetchUser}) {
       </Navbar.Group>: null
       }
       <Navbar.Group align={Alignment.RIGHT}>
+        {
+              user ? <AnchorButton
+                role="button"
+                icon="code"
+                href="/editor"
+                className='bp3-minimal'
+                style={{color: 'white'}}
+              >
+                    Editor
+              </AnchorButton> : null
+        }
         <Navbar.Divider />
         <User />
       </Navbar.Group>

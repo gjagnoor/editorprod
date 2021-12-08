@@ -3,6 +3,15 @@ import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
 import {fetchProjects, postProject, updateProject, deleteProject} from './projectAPI.js';
 
 const initialState = {
+  new: {
+    name: '',
+    key: '',
+    content: {
+      html: '',
+      js: '',
+      css: '',
+    },
+  },
   current: {
     name: '',
     key: '',
@@ -43,7 +52,11 @@ export const projectSlice = createSlice({
   initialState,
   reducers: {
     writeName(state, action) {
-      state.current.name = action.payload;
+      state.new.name = action.payload;
+      return state;
+    },
+    writeNew(state, action) {
+      state.new = action.payload;
       return state;
     },
     loadProjectOnState(state, action) {
@@ -102,6 +115,6 @@ export const projectSlice = createSlice({
   },
 });
 
-export const {writeName, loadProjectOnState, writeCodeOnState, writeRenderProject} = projectSlice.actions;
+export const {writeName, loadProjectOnState, writeCodeOnState, writeRenderProject, writeNew} = projectSlice.actions;
 
 export default projectSlice.reducer;

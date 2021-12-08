@@ -4,13 +4,21 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {Button, Overlay, TextArea} from '@blueprintjs/core';
-import {writeName, postProjectAsync} from './projectSlice';
+import {writeName, postProjectAsync, writeNew} from './projectSlice';
 
-function AddProjectForm({showAddForm, setShowAddForm, saveName, current, addProject}) {
+function AddProjectForm({showAddForm, setShowAddForm, saveName, resetNew, addProject, newProject}) {
   function handleSave(e) {
     e.stopPropagation();
-    addProject(current);
-    saveName('');
+    addProject(newProject);
+    resetNew({
+      name: '',
+      key: '',
+      content: {
+        html: '',
+        js: '',
+        css: '',
+      },
+    });
     setShowAddForm(false);
   }
   return (
@@ -28,7 +36,7 @@ function AddProjectForm({showAddForm, setShowAddForm, saveName, current, addProj
           intent='primary'
           placeholder='Add a unique name'
           onChange={(evt) => saveName(evt.target.value)}
-          value={current.name}
+          value={newProject.name}
         />
         <Button
           icon='plus'
@@ -51,7 +59,7 @@ function AddProjectForm({showAddForm, setShowAddForm, saveName, current, addProj
 
 const mapStateToProps = (state) => {
   return {
-    current: state.project.current,
+    newProject: state.project.new,
   };
 };
 
@@ -59,6 +67,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     addProject: (project) => dispatch(postProjectAsync(project)),
     saveName: (name) => dispatch(writeName(name)),
+    resetNew: (newProject) => dispatch(writeNew(newProject)),
   };
 };
 

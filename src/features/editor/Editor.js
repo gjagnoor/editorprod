@@ -13,7 +13,6 @@ import {updateProjectAsync, writeRenderProject} from './projectSlice';
 function Editor({current, all, saveProject, render, renderProject}) {
   const [showAddForm, setShowAddForm] = useState(false);
   const [showProjects, setShowProjects] = useState(false);
-  console.log('render project', renderProject);
   return (
     <div>
       <ButtonGroup vertical={false} style={{margin: '2em'}} >
@@ -58,6 +57,7 @@ function Editor({current, all, saveProject, render, renderProject}) {
         >
         </Button>
       </ButtonGroup>
+      <p style={{color: 'white', display: 'flex', justifyContent: 'center', fontSize: '1em'}}>{current.name}</p>
       <AddProjectForm showAddForm={showAddForm} setShowAddForm={setShowAddForm}
       />
       <Projects showProjects={showProjects} setShowProjects={setShowProjects} />
