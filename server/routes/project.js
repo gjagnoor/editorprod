@@ -3,6 +3,7 @@ const router = require('express').Router();
 const db = require('../firestore/index.js');
 const redis = require('../redis/index.js');
 const s3 = require('../storageS3/index.js');
+const uniqid = require('uniqid');
 const {PrismaClient} = require('@prisma/client');
 const prisma = new PrismaClient();
 require('dotenv').config();
@@ -21,9 +22,9 @@ router.get('/hello', async (req, res, next) => {
 });
 
 router.post('/project', authCheck, async (req, res, next) => {
-    console.log("req.body", req.body);
-    // to split into 3 functions after this works
-     /*
+  console.log('req.body', req.body);
+  // to split into 3 functions after this works
+  /*
           {
               name: ,
               userID: ,
@@ -35,67 +36,60 @@ router.post('/project', authCheck, async (req, res, next) => {
               }
           }
     */
-    const paramsHTML = {
-        Bucket: 'editorv1',
-        Body: req.body.content.html,
-        Key: `${req.user.id}/${req.body.name}/structure.html`,
-    };
-    const paramsJS = {
-        Bucket: 'editorv1',
-        Body: req.body.content.js,
-        Key: `${req.user.id}/${req.body.name}/interaction.js`,
-    };
-    const paramsCSS = {
-        Bucket: 'editorv1',
-        Body: req.body.content.css,
-        Key: `${req.user.id}/${req.body.name}/style.css`,
-    };
-    await s3.upload(paramsHTML, req.body.html).promise(),
-    await s3.upload(paramsJS, req.body.js).promise(),
-    await s3.upload(paramsCSS, req.body.css).promise(),
-    let [projects, allProjects] = await prisma.$transaction([
-        prisma.project.create({
-        data: {
-            name: req.body.name,
-            userID: req.user.id,
-            key: `${req.user.id}/${req.body.name}`,
-        },
-        }),
-        prisma.project.findMany({
-        where: {
-            userID: req.user.id,
-        },
-        }),
-    ]);
-    // fetch all projects from s3 and load them on the object. To improve this process later. 
-    const promiseHTML = s3.getObject(paramsHTML, (err, data) => {
-        data = data.Body.toString('utf-8');
-        return data;
+  const paramsHTML = {
+    Bucket: 'editorv1',
+    Body: req.body.content.html,
+    Key: `${req.user.id}/${req.body.name}/structure.html`,
+  };
+  const paramsJS = {
+    Bucket: 'editorv1',
+    Body: req.body.content.js,
+    Key: `${req.user.id}/${req.body.name}/interaction.js`,
+  };
+  const paramsCSS = {
+    Bucket: 'editorv1',
+    Body: req.body.content.css,
+    Key: `${req.user.id}/${req.body.name}/style.css`,
+  };
+  await s3.upload(paramsHTML).promise();
+  await s3.upload(paramsJS).promise();
+  await s3.upload(paramsCSS).promise();
+  const [project, allProjects] = await prisma.$transaction([
+    prisma.project.create({
+      data: {
+        name: req.body.name,
+        userID: req.user.id,
+        key: `${req.user.id}/${req.body.name}`,
+      },
+    }),
+    prisma.project.findMany({
+      where: {
+        userID: req.user.id,
+      },
+    }),
+  ]).catch((err) => console.error(err));
+  const all = await Promise.all(allProjects.map(async (project) => {
+    const dataHTML = await s3.getObject({
+      Bucket: 'editorv1',
+      Key: `${req.user.id}/${project.name}/structure.html`,
     }).promise();
-    const promiseCSS = s3.getObject(paramsCSS, (err, data) => {
-        data = data.Body.toString('utf-8');
-        return data;
+    const dataJS = await s3.getObject({
+      Bucket: 'editorv1',
+      Key: `${req.user.id}/${project.name}/interaction.js`,
     }).promise();
-    const promiseJS = s3.getObject(paramsHTML, (err, data) => {
-        data = data.Body.toString('utf-8');
-        return data;
+    const dataCSS = await s3.getObject({
+      Bucket: 'editorv1',
+      Key: `${req.user.id}/${project.name}/style.css`,
     }).promise();
-    await Promise
-        .all([promiseHTML, promiseJS, promiseCSS])
-        .then(function (data) {
-            const all = allProjects.map((project) => {
-                if (project.name !== req.body.name) {
-                    return project;
-                } else {
-                    return {
-                        ...project,
-                        content: data
-                    }
-                }
-            });
-            return res.json(all);
-        })
-        .catch((err) => console.err(err)); // res.json(values) here
+    project.content = {
+      html: dataHTML.Body.toString('utf-8'),
+      js: dataJS.Body.toString('utf-8'),
+      css: dataCSS.Body.toString('utf-8'),
+    };
+    return project;
+  }));
+  console.log('all::: ', all);
+  return res.json(all);
 });
 
 router.put('/project', authCheck, async (req, res, next) => {
@@ -113,10 +107,33 @@ router.put('/project', authCheck, async (req, res, next) => {
   */
 });
 
-router.get('/projects', authCheck, async (req, res, next) => {
-  // get all project names and S3 path name from postgreSQL
-  // get all projects from s3 and map them to each other
-  // return the array
+router.get('/projects', async (req, res, next) => {
+  const allProjects = await prisma.project.findMany({
+    where: {
+      userID: req.user.id,
+    },
+  }).catch((err) => console.error(err));
+  const all = await Promise.all(allProjects.map(async (project) => {
+    const dataHTML = await s3.getObject({
+      Bucket: 'editorv1',
+      Key: `${req.user.id}/${project.name}/structure.html`,
+    }).promise();
+    const dataJS = await s3.getObject({
+      Bucket: 'editorv1',
+      Key: `${req.user.id}/${project.name}/interaction.js`,
+    }).promise();
+    const dataCSS = await s3.getObject({
+      Bucket: 'editorv1',
+      Key: `${req.user.id}/${project.name}/style.css`,
+    }).promise();
+    project.content = {
+      html: dataHTML.Body.toString('utf-8'),
+      js: dataJS.Body.toString('utf-8'),
+      css: dataCSS.Body.toString('utf-8'),
+    };
+    return project;
+  }));
+  return res.json(all);
 });
 
 module.exports = router;

@@ -1,6 +1,6 @@
 /* eslint-disable max-len */
 import {createAsyncThunk, createSlice} from '@reduxjs/toolkit';
-import {fetchProjects} from './projectAPI.js';
+import {fetchProjects, postProject, updateProject, deleteProject} from './projectAPI.js';
 
 const initialState = {
   current: {
@@ -26,12 +26,13 @@ export const updateProjectAsync = createAsyncThunk('project/update', async (proj
 });
 
 export const postProjectAsync = createAsyncThunk('project/post', async (project) => {
+  console.log(project);
   const projects = await postProject(project);
   return projects;
 });
 
 export const deleteProjectAsync = createAsyncThunk('project/delete', async (project) => {
-  const projects = await updateProject(project);
+  const projects = await deleteProject(project);
   return projects;
 });
 
@@ -41,6 +42,10 @@ export const projectSlice = createSlice({
   reducers: {
     writeName(state, action) {
       state.current.name = action.payload;
+      return state;
+    },
+    loadProjectOnState(state, action) {
+      state.current = action.payload;
       return state;
     },
   },
@@ -66,6 +71,6 @@ export const projectSlice = createSlice({
   },
 });
 
-export const {writeName} = projectSlice.actions;
+export const {writeName, loadProjectOnState} = projectSlice.actions;
 
 export default projectSlice.reducer;

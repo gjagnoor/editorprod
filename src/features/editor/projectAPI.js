@@ -15,6 +15,7 @@ export async function updateProject(project) {
 }
 
 export async function postProject(project) {
+  console.log(project);
   return await axios.post('/api/project', project)
       .then((res) => res.data)
       .catch((err) => console.error(err));
