@@ -4,29 +4,38 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import {fetchUserAsync, logoutAsync} from '../user/userSlice.js';
-import {Navbar, Alignment, AnchorButton} from '@blueprintjs/core';
+import {Navbar, Alignment} from '@blueprintjs/core';
 import User from '../user/User.js';
 
-function Navigation({user, logout, fetchUser}) {
-  React.useEffect(() => {
-    fetchUser();
-  }, [fetchUser]);
-
+function Navigation({user}) {
   return (
-    <Navbar>
+    <Navbar id='navbar'>
+      {
+          window.location.pathname !== '/' ?
       <Navbar.Group align={Alignment.LEFT}>
-        <Navbar.Heading> [ ] Codebase</Navbar.Heading>
+        <h2 className='app-heading'> EDITOR </h2>
         <Navbar.Divider />
-        <AnchorButton
-          className="bp3-button bp3-minimal"
-          role="button"
-          icon="home"
-          href="/"
+        <a
+          className='bp3-button bp3-icon-home bp3-minimal'
+          style={{color: 'white'}}
+          href='/'
         >
-                    Home
-        </AnchorButton>
-      </Navbar.Group>
+            Home
+        </a>
+      </Navbar.Group> : null
+      }
       <Navbar.Group align={Alignment.RIGHT}>
+        {
+          user ?
+            <a
+              className='bp3-button bp3-icon-code bp3-minimal'
+              style={{color: 'white'}}
+              href='/editor'
+            >
+              Editor
+            </a> :
+               null
+        }
         <Navbar.Divider />
         <User />
       </Navbar.Group>

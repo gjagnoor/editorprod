@@ -7,10 +7,16 @@ const s3 = require('../storageS3/index.js');
 require('dotenv').config();
 console.log('in', process.env.NODE_ENV);
 
-const domain =
+const loginDomain =
     process.env.NODE_ENV === 'development' ?
-        'http://localhost:3000' :
-        'https://editorprod.herokuapp.com';
+        'http://localhost:3000/editor' :
+    'https://editorprod.herokuapp.com/editor';
+
+const logoutDomain =
+    process.env.NODE_ENV === 'development' ?
+        'http://localhost:3000/' :
+    'https://editorprod.herokuapp.com/';
+
 const authenticationOptions = {
   scope: ['user:email'],
 };
@@ -35,14 +41,14 @@ router.get('/user', authCheck, async (req, res) => {
 router.get('/github', passport.authenticate('github', authenticationOptions));
 
 // auth logout
-router.get('/logout', function(req, res) {
-  req.logOut();
-  return res.json(null);
+router.get('/logout', authCheck, function(req, res) {
+  req.logout();
+  return res.redirect(logoutDomain);
 });
 
 // redirect
 router.get('/github/redirect', passport.authenticate('github'), (req, res) => {
-  return res.redirect(domain);
+  return res.redirect(loginDomain);
 });
 
 // db.collection('userConfig').doc('9382293kjdnkjaendk').set({
