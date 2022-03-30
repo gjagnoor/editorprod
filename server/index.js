@@ -9,7 +9,7 @@ const passport = require('passport');
 const cookieSession = require('cookie-session');
 
 
-const port = process.env.PORT || 7000;
+const port = process.env.PORT || 8000;
 app.use(express.json());
 require('dotenv').config();
 app.use(

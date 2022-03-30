@@ -27,3 +27,65 @@ p {
     background-color: rgba(76, 175, 80, 0);
     box-shadow: none;
 }
+
+#monaco {
+    display: flex;
+    justify-content: space-evenly;
+    margin: 2em;
+}
+
+.editor {
+    border: 1px solid #4bb2f9;
+    margin: 2em;
+}
+
+/* (Mobile S, 320px and up) */
+@media (max-width: 320px) {
+    body {
+        overflow: auto;
+    }
+    #monaco {
+        flex-wrap: wrap;
+    }
+}
+
+/* (Mobile M, 375px and up) */
+@media (max-width: 375px) {
+    body {
+        overflow: auto;
+    }
+    #monaco {
+        flex-wrap: wrap;
+    }
+}
+
+/* (Mobile L, 425px and up */
+@media (max-width: 425px) {
+    body {
+        overflow: auto;
+    }
+    #monaco {
+        flex-wrap: wrap;
+    }
+}
+
+/* (desktop small, 500px and up */
+@media (max-width: 500px) {
+    body {
+        overflow: auto;
+    }
+    #monaco {
+        flex-wrap: wrap;
+    }
+}
+
+/* (Tablet, 768px and up) */
+
+@media (max-width: 900px) {
+    body {
+        overflow: auto;
+    }
+    #monaco {
+        flex-direction: column;
+    }
+}
