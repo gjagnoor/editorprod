@@ -28,7 +28,7 @@ function User({user, logout, fetchUser}) {
             className='bp3-button bp3-icon-log-in bp3-minimal'
             href={
                     process.env.NODE_ENV === 'development' ?
-                        `http://localhost:7000/api/github` :
+                        `http://localhost:8000/api/github` :
               `https://editorprod.herokuapp.com/api/github`
             }
             style={{color: 'white'}}
